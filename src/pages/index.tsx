@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 interface Participant {
@@ -6,12 +6,14 @@ interface Participant {
     image: string;
 }
 
-const App: React.FC = () => {
+const Index: React.FC = () => {
     const [participants, setParticipants] = useState<Participant[]>([]);
     const [winner, setWinner] = useState<Participant | null>(null);
     const [highlightedId, setHighlightedId] = useState<number | null>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [showModal, setShowModal] = useState(false);
+
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -27,9 +29,10 @@ const App: React.FC = () => {
     const drawWinner = () => {
         if (participants.length > 0) {
             setIsDrawing(true);
+            audioRef.current?.play(); // Play music
             let animationInterval: NodeJS.Timeout;
 
-            const duration = 3000;
+            const duration = 5000;
             const stepTime = 100;
 
             animationInterval = setInterval(() => {
@@ -52,13 +55,16 @@ const App: React.FC = () => {
         }
     };
 
-    const closeModal = () => setShowModal(false);
+    const closeModal = () => {
+        audioRef.current?.pause(); // Stop music
+        audioRef.current?.load(); // Reset playback
+        setShowModal(false);
+    };
 
     const progress = (participants.length / 200) * 100;
 
     return (
         <div className={styles.container}>
-            {/* Header */}
             <header className={styles.header}>
                 <h1>Random Draw Game</h1>
                 <div className={styles.headerActions}>
@@ -87,7 +93,6 @@ const App: React.FC = () => {
                 </div>
             </header>
 
-            {/* Main Content */}
             <main className={styles.gridContainer}>
                 {participants.map((participant) => (
                     <div
@@ -104,17 +109,18 @@ const App: React.FC = () => {
                 ))}
             </main>
 
-            {/* Modal Popup */}
+            <audio ref={audioRef} src="/assets/music.mp3" />
+
             {showModal && winner && (
                 <div className={styles.modal}>
                     <div className={styles.modalContent}>
-                        <h2>🎉 We Have a Winner! 🎉</h2>
+                        <h3 className={styles.h3}>🎉 We Have a Winner 🎉</h3>
                         <img
                             src={winner.image}
                             alt={`Winner ${winner.id}`}
                             className={styles.modalImage}
                         />
-                        <p>Winner ID: {winner.id}</p>
+                        <p className={styles.p}>Winner ID: {winner.id}</p>
                         <button onClick={closeModal} className={styles.closeButton}>
                             Close
                         </button>
@@ -125,4 +131,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default Index;
