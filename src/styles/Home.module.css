@@ -5,17 +5,22 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  align-items: stretch;
+  margin-bottom: 4.7pc;
+  overflow-x: hidden;
+
 }
 
 .header {
+  margin: 0;
+  padding: 15px 20px;
+  position: sticky;
+  top: 0;
   width: 100%;
   background-color: #4caf50;
   color: white;
-  padding: 15px 20px;
-  border-radius: 0;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  text-align: center;
+  z-index: 100;
 }
 
 .header h1 {
@@ -63,7 +68,7 @@
   height: 10px;
   border-radius: 5px;
   background-color: #2196f3;
-  transition: width 0.3s ease-in-out;
+  transition: width 0.4s ease-in-out;
 }
 
 .progressText {
@@ -72,12 +77,17 @@
 }
 
 .gridContainer {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+    gap: 2px;
+    padding: 0;
+    margin: 0;
+  }
+  
+.participantCard img {
   width: 100%;
-  padding: 10px;
-  color: #444;
+  height: auto;
+  object-fit: cover;
 }
 
 .participantCard {
@@ -87,18 +97,12 @@
   border-radius: 5px;
   overflow: hidden;
   width: 100%;
-  height: 100px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f9f9f9;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.participantCard img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .highlighted {
@@ -137,26 +141,25 @@
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
   width: 90%;
-  max-width: 300px;
+  max-width: 500px;
   color: #444;
 }
 .p {
   padding-bottom: 1pc;
 }
-.h3{
-    padding-bottom: 1pc;
+.h3 {
+  padding-bottom: 1pc;
 }
 
 .modalImage {
-    width: auto;
-    max-width: 100%;
-    height: auto;
-    max-height: 300px;
-    object-fit: contain;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-  
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 375px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
 
 .closeButton {
   background-color: #4caf50;
